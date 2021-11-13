@@ -3,12 +3,6 @@ import {Card, CardImg, CardBody, CardTitle} from 'reactstrap'
 
 
 class CampsiteInfo extends Component {
-    constructor (props){
-        super(props);
-        this.state = {
-            color: "Yellow"
-        }
-    }
 
     formatDate(date){
         if(date){
@@ -28,7 +22,6 @@ class CampsiteInfo extends Component {
             )
         }
     }
-
     
     renderCampsite(campsite){
         if(campsite){
@@ -41,22 +34,26 @@ class CampsiteInfo extends Component {
                             <CardTitle>{campsite.description}</CardTitle>
                         </CardBody>
                     </Card>
-                    {this.renderComments(campsite.comments)}
                 </div>
             )
         }
     }
+    
     render() {
         if(this.props.campsite){
             return (
-                <div className='row'>
-                    {this.renderCampsite(this.props.campsite)}
+                <div className="container">
+                    <div className='row'>
+                        {this.renderCampsite(this.props.campsite)}
+                        {this.renderComments(this.props.campsite.comments)}
+                    </div>
                 </div>
             ) 
         }
 
         return <div></div>
     }
+
 }
 
 export default CampsiteInfo
