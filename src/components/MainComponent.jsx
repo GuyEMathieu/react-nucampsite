@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Routes, Route, Navigate} from 'react-router-dom'
+import {Routes, Route, Navigate, useParams} from 'react-router-dom'
 
 
 //#region SHARED
@@ -11,6 +11,7 @@ import { PROMOTIONS } from '../shared/promotions';
 
 //#region COMPONENTS
 import Directory from './DirectoryComponent';
+import CampsiteInfo from './CampsiteInfoComponent';
 import Contact from './ContactComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
@@ -33,6 +34,9 @@ class Main extends Component {
         this.setState({selectedCampsite: campsiteId});
     }
 
+       
+
+
     render() {
         const HomePage = () => {
             return (
@@ -43,6 +47,20 @@ class Main extends Component {
                 />
             )
         }
+
+        const CampsiteWithId = ({match}) => {
+            console.info("Match", match)
+            const params = useParams();
+            return ( 
+                <CampsiteInfo 
+                    campsite={this.state.campsites.filter(campsite => campsite.id === 
+                        +params.campsiteId)[0]}
+                    comments={this.state.comments.filter(comment => comment.campsiteId === 
+                        +params.campsiteId)}
+                />
+            );
+        }; 
+
         return (
             <div>
                 <Header  />
@@ -50,9 +68,10 @@ class Main extends Component {
                     <Route path='/home'element={<HomePage  />} />
                     <Route path='/contactus'element={<Contact  />} />
                     <Route path='/' element={<Navigate to='/home'  />} />
-                    <Route path='/directory' render={() =>
+                    <Route path='/directory' element={
                         <Directory campsites={this.state.campsites} />
                     }/>
+                    <Route path='/directory/:campsiteId' element={<CampsiteWithId  />} />
                 </Routes>
                 <Footer  />              
             </div>
