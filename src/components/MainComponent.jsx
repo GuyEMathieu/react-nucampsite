@@ -5,6 +5,8 @@ import CampsiteInfo from './CampsiteInfoComponent';
 import { CAMPSITES } from '../shared/campsites';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
+import {Routes, Route, Navigate} from 'react-router-dom'
+import Home from './HomeComponent';
 
 class Main extends Component {
     constructor(props) {
@@ -20,12 +22,22 @@ class Main extends Component {
     }
 
     render() {
+        const HomePage = () => {
+            return (
+                <Home  />
+            )
+        }
         return (
             <div>
                 <Header  />
-                <Directory campsites={this.state.campsites} onClick={campsiteId => this.onCampsiteSelect(campsiteId)}/>
-                <CampsiteInfo campsite={this.state.campsites.filter(campsite => campsite.id === this.state.selectedCampsite)[0]} />
-                <Footer  />
+                <Routes>
+                    <Route path='/home'element={<HomePage  />} />
+                    <Route path='/' element={<Navigate to='/home'  />} />
+                    <Route path='/directory' render={() =>
+                        <Directory campsites={this.state.campsites} />
+                    }/>
+                </Routes>
+                <Footer  />              
             </div>
         );
     };

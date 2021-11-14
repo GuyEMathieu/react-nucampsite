@@ -5,7 +5,6 @@ import 'bootstrap-social/bootstrap-social.css';
 
 import Main from "./components/MainComponent";
 import {CAMPSITES} from './shared/campsites';
-
 class App extends Component {
   constructor(props){
     super(props);
@@ -15,9 +14,9 @@ class App extends Component {
   }
   render(){
     return (
-      <div className="App">
-        <Main  />
-      </div>
+        <div className="App">
+          <Main  />
+        </div>
     )
   }
 }
