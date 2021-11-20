@@ -19,9 +19,8 @@ function RenderDirectoryItem({campsite}) {
         </Card>
     );
 }
+
 function Directory (props) {
-
-
     const directory = props.campsites.map(campsite => {
         return (
             <div key={campsite.id} className="col-md-5 m-1">

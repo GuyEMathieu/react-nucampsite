@@ -16,6 +16,7 @@ import Contact from './ContactComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
+import About from './AboutComponent'
 //#endregion
 
 class Main extends Component {
@@ -66,12 +67,15 @@ class Main extends Component {
                 <Header  />
                 <Routes>
                     <Route path='/home'element={<HomePage  />} />
+                    <Route path='/home'element={<HomePage  />} />
+
                     <Route path='/contactus'element={<Contact  />} />
                     <Route path='/' element={<Navigate to='/home'  />} />
                     <Route path='/directory' element={
                         <Directory campsites={this.state.campsites} />
                     }/>
                     <Route path='/directory/:campsiteId' element={<CampsiteWithId  />} />
+                    <Route path='/aboutus' element={<About partners={this.state.partners}  />} />
                 </Routes>
                 <Footer  />              
             </div>

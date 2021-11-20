@@ -4,7 +4,7 @@ import {Card, CardImg, CardBody, CardTitle} from 'reactstrap'
 function renderComments(comments){
     if(comments){
         return (
-            <div>
+            <div className='col-md-5 m-1'>
                 <h4>Comments</h4>
                 {comments.map(c => (
                     <p>{c.text} <br/> --{c.author} {formatDate(c.date)}</p>
@@ -36,8 +36,6 @@ function renderCampsite(campsite){
     }
 }
 function CampsiteInfo (props) {
-
-    
     
     if(props.campsite){
         return (
