@@ -1,5 +1,6 @@
 import React from 'react'
 import {Card, CardImg, CardBody, CardTitle} from 'reactstrap'
+import CommentForm from './CommentForm'
 
 function renderComments(comments){
     if(comments){
@@ -9,6 +10,7 @@ function renderComments(comments){
                 {comments.map(c => (
                     <p>{c.text} <br/> --{c.author} {formatDate(c.date)}</p>
                 ))}
+                <CommentForm  />
             </div>
         )
     }
