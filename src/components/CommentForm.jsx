@@ -8,10 +8,16 @@ import ModalHeader from 'reactstrap/lib/ModalHeader';
 
 
 export class CommentForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isModalOpen: props.isModalOpen
+        }
+    }
     render() {
         return (
             <div>
-                <Modal isOpen={true}>
+                <Modal isOpen={this.state.isModalOpen}>
                     <ModalHeader>
                         Submit Comment
                     </ModalHeader>
