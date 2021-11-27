@@ -6,9 +6,6 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
-const isNumber = (val) => !isNaN(+val);
-// const validEmail = (val) =>
-//     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 export class CommentForm extends Component {
     constructor(props) {
@@ -22,9 +19,8 @@ export class CommentForm extends Component {
             }
         };
 
-        this.handleComment = this.handleComment.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
     toggleModal() {
@@ -33,17 +29,11 @@ export class CommentForm extends Component {
         });
     }
 
-    handleComment() {
-        console.info("Current State is", this.state.newRating)
-        alert("Current state is: ", this.state.newRating);
+    handleSubmit(values) {
+        console.log('Current state is: ' + JSON.stringify(values));
+        alert('Current state is: ' + JSON.stringify(values));
     }
 
-    handleChange(e) {
-        const { name, value } = e.target;
-        this.setState({
-            newRating: {...this.state.newRating, [name]: value}
-        })
-    }
     render() {
         return (
             <div>
@@ -52,9 +42,9 @@ export class CommentForm extends Component {
                         Submit Comment
                     </ModalHeader>
                     <ModalBody>
-                        <LocalForm onSubmit={this.handleComment}>
+                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                             <div className="form-group">
-                                <Label htmlFor="rating" md={2}>
+                                <Label htmlFor="rating">
                                     Rating
                                 </Label>
                                 <Control.select
@@ -62,29 +52,24 @@ export class CommentForm extends Component {
                                     model=".rating"
                                     id="rating"
                                     name="rating"
-                                    onChange={this.handleChange}
-                                    value={this.state.newRating.rating}
-                                    className="form-control"
                                 >
-                                    <option value={1}>1</option>
-                                    <option value={2}>2</option>
-                                    <option value={3}>3</option>
-                                    <option value={4}>4</option>
-                                    <option value={5}>5</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
                                 </Control.select>
                             </div>
                             <div className="form-group">
-                                <Label htmlFor="author" md={2}>
-                                    Author
+                                <Label htmlFor="author" >
+                                    Your Name
                                 </Label>
                                 <Control.text
                                     className="form-control"
                                     model=".author"
                                     id="author"
                                     name="author"
-                                    placeholder="Author"
-                                    onChange={this.handleChange}
-                                    value={this.state.newRating.author}
+                                    placeholder="Your Name"
                                     className="form-control"
                                     validators={{
                                         minLength: minLength(2),
@@ -106,18 +91,15 @@ export class CommentForm extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <Label htmlFor="text" md={2}>
-                                    Text
+                                <Label htmlFor="text" >
+                                    Comment
                                 </Label>
                                 <Control.textarea
                                     model=".text"
                                     id="text"
                                     name="text"
-                                    onChange={this.handleChange}
-                                    value={this.state.newRating.text}
                                     className="form-control"
                                     rows={6}
-                                    placeholder="Comment"
                                     className="form-control"
                                 />
                             </div>
