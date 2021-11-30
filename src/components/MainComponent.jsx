@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-
 import { connect } from 'react-redux';
+import { addComment } from '../redux/ActionCreators';
 
 
 //#region COMPONENTS
@@ -23,6 +23,11 @@ const mapStateToProps = state => {
     };
 };
 
+const mapDispatchToProps = {
+    addComment: (campsiteId, rating, author, text) =>
+        addComment(campsiteId, rating, author, text),
+};
+
 class Main extends Component {
 
     onCampsiteSelect(campsiteId) {
@@ -42,11 +47,13 @@ class Main extends Component {
         }
 
         const CampsiteWithId = ({match}) => {
-            console.info("Match", match)
+            // console.info("Match", match)
+            // console.info("comments From Store", this.props.comments)
             return ( 
                 <CampsiteInfo 
                     campsite={this.props.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} 
-                    comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)} 
+                    comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                    addComment={this.props.addComment}
                 />
                 
             );
@@ -69,4 +76,5 @@ class Main extends Component {
     };
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

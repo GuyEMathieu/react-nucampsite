@@ -30,8 +30,10 @@ export class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        console.log('Current state is: ' + JSON.stringify(values));
-        alert('Current state is: ' + JSON.stringify(values));
+        this.toggleModal();
+        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text)
+        // console.log('Current state is: ' + JSON.stringify(values));
+        //alert('Current state is: ' + JSON.stringify(values));
     }
 
     render() {
@@ -121,17 +123,25 @@ export class CommentForm extends Component {
     }
 }
 
-function renderComments(comments) {
+
+
+function RenderComments({ comments, addComment, campsiteId }) {
     if (comments) {
         return (
             <div className="col-md-5 m-1">
                 <h4>Comments</h4>
-                {comments.map((c) => (
-                    <p>
-                        {c.text} <br /> --{c.author} {formatDate(c.date)}
-                    </p>
-                ))}
-                <CommentForm />
+                {comments.map(comment => {
+                    return (
+                        <div key={comment.id}>
+                            <p>{comment.text}<br />
+                                --{comment.author}, {formatDate(comment.date)}
+                            </p>
+                        </div>
+                    )
+                })}
+                <CommentForm
+                    campsiteId={campsiteId}
+                    addComment={addComment} />
             </div>
         );
     }
@@ -147,7 +157,7 @@ function formatDate(date) {
     }
 }
 
-function renderCampsite(campsite) {
+function RenderCampsite({ campsite }) {
     if (campsite) {
         return (
             <div className="col-md-5 m-1">
@@ -163,13 +173,15 @@ function renderCampsite(campsite) {
     }
 }
 function CampsiteInfo(props) {
-
     if (props.campsite) {
         return (
             <div className="container">
                 <div className="row">
-                    {renderCampsite(props.campsite)}
-                    {renderComments(props.comments)}
+                    <RenderCampsite campsite={props.campsite} />
+                    <RenderComments
+                        campsiteId={props.campsite.id}
+                        addComment={props.addComment}
+                        comments={props.comments} />
                 </div>
             </div>
         );
