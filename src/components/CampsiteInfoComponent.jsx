@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardBody, CardTitle } from 'reactstrap';
-import { Button, Modal, ModalBody, Row, Col, Label, ModalHeader } from 'reactstrap';
+import { Button, Modal, ModalBody, Label, ModalHeader } from 'reactstrap';
 
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
@@ -18,7 +18,6 @@ export class CommentForm extends Component {
                 text: ""
             }
         };
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
     }
@@ -32,8 +31,6 @@ export class CommentForm extends Component {
     handleSubmit(values) {
         this.toggleModal();
         this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text)
-        // console.log('Current state is: ' + JSON.stringify(values));
-        //alert('Current state is: ' + JSON.stringify(values));
     }
 
     render() {
@@ -122,8 +119,6 @@ export class CommentForm extends Component {
         );
     }
 }
-
-
 
 function RenderComments({ comments, addComment, campsiteId }) {
     if (comments) {
