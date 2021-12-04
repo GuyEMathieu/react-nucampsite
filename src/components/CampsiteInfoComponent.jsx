@@ -7,6 +7,7 @@ import { Button, Modal, ModalBody, Label, ModalHeader } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {Loading} from './LoadingComponent'
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
 
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
@@ -161,7 +162,7 @@ function RenderCampsite({ campsite }) {
         return (
             <div className="col-md-5 m-1">
                 <Card>
-                    <CardImg top src={campsite.image} alt={campsite.name} />
+                    <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
                     <CardBody>
                         <CardTitle>{campsite.name}</CardTitle>
                         <CardTitle>{campsite.description}</CardTitle>
