@@ -4,7 +4,38 @@ import {
     CardBody, CardHeader, Media 
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
 
+function PartnerList({listOfPartners, errMess, isLoading}) {
+
+    const partners = listOfPartners.map(partner => {
+        return (
+            <Media tag='li' key={partner.id}>
+                <RenderPartner partner={partner}  />
+            </Media>
+        );
+    });
+
+    if(isLoading){
+        return <Loading  />
+    }
+
+    if(errMess){
+        <div className="col">
+            <h4>{errMess}</h4>
+        </div>
+    }
+
+
+
+    return ( 
+        <div className="col mt4">
+            <Media list>
+                {partners}
+            </Media>
+        </div>
+    )
+}
 function RenderPartner ({partner}) {
 
         if(partner){
@@ -23,18 +54,6 @@ function RenderPartner ({partner}) {
     }
     
 function About(props) {
-
-    const partners = props.partners.map(partner => {
-        console.log("partners", partner)
-        return (
-            <Media tag='li' key={partner.id}>
-                <RenderPartner partner={partner}  />
-            </Media>
-        );
-    });
-
-
-    
 
     return (
         <div className="container">
@@ -90,7 +109,12 @@ function About(props) {
                 </div>
                 <div className="col mt-4">
                     <Media list>
-                        {partners}
+                        {/* {partners} */}
+                        <PartnerList 
+                            listOfPartners={props.partners.partners}  
+                            errMess={props.partners.errMess}
+                            isLoading={props.partners.isLoading}
+                        />
                     </Media>
                 </div>
             </div>
