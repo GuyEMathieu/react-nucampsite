@@ -3,6 +3,7 @@ import { Card, CardImg, CardBody, CardTitle,
     BreadcrumbItem, Breadcrumb 
 } from 'reactstrap';
 import { Button, Modal, ModalBody, Label, ModalHeader } from 'reactstrap';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {Loading} from './LoadingComponent'
@@ -130,15 +131,19 @@ function RenderComments({ comments, postComment, campsiteId }) {
         return (
             <div className="col-md-5 m-1">
                 <h4>Comments</h4>
-                {comments.map(comment => {
-                    return (
-                        <div key={comment.id}>
-                            <p>{comment.text}<br />
-                                --{comment.author}, {formatDate(comment.date)}
-                            </p>
-                        </div>
-                    )
-                })}
+                <Stagger in >
+                    {comments.map(comment => {
+                        return (
+                            <Fade in key={comment.id}>
+                                <div>
+                                    <p>{comment.text}<br />
+                                        --{comment.author}, {formatDate(comment.date)}
+                                    </p>
+                                </div>
+                            </Fade>
+                        )
+                    })}
+                </Stagger>
                 <CommentForm
                     campsiteId={campsiteId}
                     postComment={postComment} />
@@ -161,13 +166,19 @@ function RenderCampsite({ campsite }) {
     if (campsite) {
         return (
             <div className="col-md-5 m-1">
-                <Card>
-                    <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
-                    <CardBody>
-                        <CardTitle>{campsite.name}</CardTitle>
-                        <CardTitle>{campsite.description}</CardTitle>
-                    </CardBody>
-                </Card>
+                <FadeTransform
+                    in
+                    transformprops={{
+                        exitTransform: "scale(0.5) translate"
+                    }}>
+                    <Card>
+                        <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
+                        <CardBody>
+                            <CardTitle>{campsite.name}</CardTitle>
+                            <CardTitle>{campsite.description}</CardTitle>
+                        </CardBody>
+                    </Card>
+                </FadeTransform>
             </div>
         );
     }
@@ -220,7 +231,6 @@ function CampsiteInfo(props) {
             </div>
         );
     }
-
     return <div />;
 }
 
