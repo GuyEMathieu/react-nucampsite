@@ -1,6 +1,35 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
+//#region FEEDBACK
+export const postFeedback = (feedback) => {
+    return fetch(baseUrl + 'feedback', {
+        method: "POST",
+        body: JSON.stringify(feedback),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+            if (response.ok) {
+                alert("Thank you for your feedback " + JSON.stringify(feedback))
+                return response;
+            } else {
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => { 
+            console.log('post feedback', error.message);
+            alert('Your feedback could not be posted\nError: ' + error.message);
+        }
+    )
+};
+
+
+//#endregion
+
 //#region Partner
 export const fetchPartners = () => dispatch => {
     dispatch(partnersLoading());
@@ -118,7 +147,7 @@ export const addComment = comment => ({
     payload: comment
 });
 
-    export const postComment = (campsiteId, rating, author, text) => dispatch => {
+export const postComment = (campsiteId, rating, author, text) => dispatch => {
     const newComment = {  
         campsiteId, 
         rating, 
